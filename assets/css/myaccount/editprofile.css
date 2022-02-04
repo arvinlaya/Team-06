@@ -1,78 +1,78 @@
-.mainContainer {
-	display:flex;
-    justify-content: center;
-    font-family: "Montserrat";
-    margin: 100px 100px 0px 100px;
+#container {
+	font-family: "Montserrat";
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	height: 85vh;
 }
 
-.column-1{
-    text-align: center;
-    flex-shrink: 0; 
-    flex-basis: 30%; 
-    
+#container form > div {
+	margin: 40px 0;
 }
 
-.column-2{
-    flex-basis: 40%;
-    padding-left: 10px;
-    margin: 0px;
-    flex-direction: column;
-    
+#container h2 {
+	font-weight: 600;
 }
 
-.box {
-    border-radius: 12px;
-    border: 2px solid rgb(116, 113, 113);
-  }
-
-.column-2 h2{
-    font-size: 2rem;
-    font-weight: 600;
+#container label {
+	display: flex;
+	flex-direction: column;
+	font-size: 1.5rem;
 }
 
-.forms label{
-    float: left;
-    font-weight: 500;
-    font-size: 1.4rem;
-    margin: 10px;
+.toggleEdit {
+	border: none;
+	background-color: transparent;
 }
 
-.forms{
-    text-align: left;
-    margin-top: 20px;
-    flex-direction: column;
-    
+.toggleEdit:hover {
+	cursor: pointer;
 }
 
-.button {
-    margin-top: 30px;
-    background-color: #BD2039; 
-    border: none;
-    color: white;
-    padding: 15px 32px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    float: right;
-    margin-right: 3%;
-  }
-
-input{
-    width: 90%;
-    background: #F5F5F5;
-    background: #F5F5F5;
-    border: 1px solid #F5F5F5;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-    padding: 10px;
-    margin-left: 10px;
-    margin-top: 10px;
-    font-size: 1rem;
-    
+.toggleEdit:focus {
+	outline: none;
 }
 
-#profile{
-    border-radius: 50%;
-    height: 320px;
-    width: 320px;
+#container form > button {
+	float: right;
+	font-family: "Roboto";
+	font-weight: 700;
+	color: white;
+	background-color: #bd2039;
+	text-decoration: none;
+	border: none;
+	font-size: 1.2rem;
+	padding: 0.8rem 3rem;
+	cursor: pointer;
+}
+
+#container form > button:hover {
+	background-color: #d63d57;
+}
+
+#container form button:hover {
+	cursor: pointer;
+}
+
+#container form input,
+#container form select {
+	width: 25rem;
+	margin: 10px 0;
+	border: none;
+	background-color: #f5f5f5;
+	box-shadow: -6px 9px 5px -3px rgba(145, 145, 145, 0.39);
+	-webkit-box-shadow: -6px 9px 5px -3px rgba(145, 145, 145, 0.39);
+	-moz-box-shadow: -6px 9px 5px -3px rgba(145, 145, 145, 0.39);
+}
+
+#birthdayContainer label input,
+#birthdayContainer label select {
+	width: 8rem;
+}
+
+#birthdayInputContainer {
+	display: flex;
+	justify-content: space-between;
+	width: 25rem;
 }
