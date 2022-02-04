@@ -1,6 +1,3 @@
-<div id="container">
-    <h2>Account Settings</h2>
-
     <?= validation_errors(); ?>
     <?= form_open(base_url("myaccount/edit_profile/verify")) ?>
     <div id="emailContainer">
