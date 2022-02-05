@@ -1,6 +1,5 @@
-
 <?php
-
+ob_start();
 class Pages extends CI_Controller
 {
 
@@ -28,7 +27,6 @@ class Pages extends CI_Controller
         $this->form_validation->set_rules('registerConfirmPassword', 'Confirm password', 'required');
 
         if ($this->form_validation->run() == FALSE) {
-            // echo "ERROR";
         } else {
             $emailCode = md5((string)date('Y-m-d H:i:s'));
             $emailCode = substr($emailCode, 0, 7);
@@ -181,7 +179,6 @@ class Pages extends CI_Controller
             $this->session->set_userdata("birthday", $birthday);
         }
 
-        // echo $email . " " . $name . " " . $lastName . " " . $month . " " . $day . " " . $year;
         redirect($this->agent->referrer());
     }
 
