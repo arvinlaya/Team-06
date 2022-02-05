@@ -1,5 +1,5 @@
 <?php
-ob_start();
+
 class Pages extends CI_Controller
 {
 
