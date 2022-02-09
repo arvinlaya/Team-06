@@ -53,7 +53,6 @@ class Pages extends CI_Controller
             $regData[6] = $this->input->post("registerConfirmPassword");
             $regData[7] = $emailCode;
 
-
             $this->Surveyor->insertSurveyor(...$regData);
             $this->sendEmail($emailCode, $regData['email']);
         }
