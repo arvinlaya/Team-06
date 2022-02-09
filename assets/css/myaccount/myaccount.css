@@ -1,0 +1,47 @@
+#container {
+	display: flex;
+	font-family: "Montserrat";
+	justify-content: space-evenly;
+}
+
+#left,
+#right {
+	margin: 5rem 5rem;
+}
+
+#left {
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+}
+
+#left #profilePicture {
+	text-align: center;
+}
+
+#left div {
+	margin: 3rem 0;
+}
+
+#optionList {
+	list-style-position: inside;
+	font-size: 1.5rem;
+	text-align: start;
+}
+
+#optionList li {
+	margin: 5px 0;
+}
+
+#optionList li a {
+	color: black;
+}
+
+#right #emailContainer {
+	margin: 5rem 0 9rem 0;
+}
+
+#right #emailContainer h4,
+#right #createdFormContainer h4 {
+	color: #8e8e8e;
+}

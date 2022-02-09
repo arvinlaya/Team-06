@@ -36,14 +36,22 @@ class Pages extends CI_Controller
             $birthyear = $this->input->post("registerYear");
             $birthdate = $birthyear . "-" . $birthmonth . "-" . $birthday;
 
-            $regData['email'] = $this->input->post("registerEmail");
-            $regData['first_name'] = $this->input->post("registerName");
-            $regData['last_name'] = $this->input->post("registerLastName");
-            $regData['birthday'] = $birthdate;
-            $regData['gender'] = $this->input->post("registerGender");
-            $regData['contact'] = $this->input->post("registerContact");
-            $regData['password'] = $this->input->post("registerConfirmPassword");
-            $regData['verification_code'] = $emailCode;
+            // $regData['email'] = $this->input->post("registerEmail");
+            // $regData['first_name'] = $this->input->post("registerName");
+            // $regData['last_name'] = $this->input->post("registerLastName");
+            // $regData['birthday'] = $birthdate;
+            // $regData['gender'] = $this->input->post("registerGender");
+            // $regData['contact'] = $this->input->post("registerContact");
+            // $regData['password'] = $this->input->post("registerConfirmPassword");
+            // $regData['verification_code'] = $emailCode;
+            $regData[0] = $this->input->post("registerEmail");
+            $regData[1] = $this->input->post("registerName");
+            $regData[2] = $this->input->post("registerLastName");
+            $regData[3] = $birthdate;
+            $regData[4] = $this->input->post("registerGender");
+            $regData[5] = $this->input->post("registerContact");
+            $regData[6] = $this->input->post("registerConfirmPassword");
+            $regData[7] = $emailCode;
 
             $this->Surveyor->insertSurveyor(...$regData);
             $this->sendEmail($emailCode, $regData['email']);

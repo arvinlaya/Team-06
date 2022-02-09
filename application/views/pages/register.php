@@ -48,8 +48,8 @@
                             <option value="11">November</option>
                             <option value="12">December</option>
                         </select>
-                        <input type="number" min="0" max="31" placeholder="Day" name="registerDay" required>
-                        <input type="number" min="1900" max="2025" placeholder="Year" name="registerYear" required>
+                        <input type="number" id="registerDay" name="registerDay" placeholder="day">
+                        <input type="number" id="registerYear" name="registerYear" placeholder="year">
                     </label>
                 </div>
                 <div id="formGender">
@@ -70,7 +70,7 @@
                     </label>
                 </div>
 
-                <Button id="signUpButton" type="submit">Sign Up</Button>
+                <button id="signUpButton" type="submit">Sign Up</button>
         </form>
     </div>
 </body>
