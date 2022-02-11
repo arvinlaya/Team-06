@@ -4,7 +4,7 @@
     </div>
 
     <div id="getStartedButton">
-        <button class="homeButton">Get Started</button>
+        <button class="homeButton" onclick="location.href='#createFormContainer'">Get Started</button>
     </div>
 </section>
 
@@ -21,7 +21,7 @@
                 <p>(You must create an account first to ensure the validity of surveys)</p>
             </div>
 
-            <button class="homeButton">Create Form</button>
+            <button class="homeButton" onclick="location.href='<?= base_url('create_form') ?>'">Create Form</button>
         </div>
         <div id="createFormImage">
             <img src="<?= base_url("assets/images/home/survey.png") ?>">
@@ -39,7 +39,7 @@
                 <h3>Enter the code to be given by the surveyor to be able to answer forms and improve their database.</h3>
             </div>
 
-            <button class="homeButton">Answer Form</button>
+            <button class="homeButton" onclick="location.href='<?= base_url('reports') ?>'">Answer Form</button>
         </div>
         <div id="answerFormImage">
             <img src="<?= base_url("assets/images/home/answer.png") ?>">
@@ -57,7 +57,7 @@
                 <h3>View the data reports generated from the answered surveys to help you complete your data for your research</h3>
             </div>
 
-            <button class="homeButton">Data Reports</button>
+            <button class="homeButton" onclick="location.href='<?= base_url('reports') ?>'">Data Reports</button>
         </div>
     </div>
 </section>

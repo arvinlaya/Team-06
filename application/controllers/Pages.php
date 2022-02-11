@@ -1,6 +1,5 @@
-
 <?php
-
+ob_start();
 class Pages extends CI_Controller
 {
 
@@ -19,6 +18,12 @@ class Pages extends CI_Controller
         $this->load->view('templates/footer');
     }
 
+    public function logout()
+    {
+        $this->session->sess_destroy();
+        redirect(base_url());
+    }
+
     public function register()
     {
         $this->load->view('pages/register.php');
@@ -28,7 +33,6 @@ class Pages extends CI_Controller
         $this->form_validation->set_rules('registerConfirmPassword', 'Confirm password', 'required');
 
         if ($this->form_validation->run() == FALSE) {
-            // echo "ERROR";
         } else {
             $emailCode = md5((string)date('Y-m-d H:i:s'));
             $emailCode = substr($emailCode, 0, 7);
@@ -38,14 +42,23 @@ class Pages extends CI_Controller
             $birthyear = $this->input->post("registerYear");
             $birthdate = $birthyear . "-" . $birthmonth . "-" . $birthday;
 
-            $regData['email'] = $this->input->post("registerEmail");
-            $regData['first_name'] = $this->input->post("registerName");
-            $regData['last_name'] = $this->input->post("registerLastName");
-            $regData['birthday'] = $birthdate;
-            $regData['gender'] = $this->input->post("registerGender");
-            $regData['contact'] = $this->input->post("registerContact");
-            $regData['password'] = $this->input->post("registerConfirmPassword");
-            $regData['verification_code'] = $emailCode;
+            // $regData['email'] = $this->input->post("registerEmail");
+            // $regData['first_name'] = $this->input->post("registerName");
+            // $regData['last_name'] = $this->input->post("registerLastName");
+            // $regData['birthday'] = $birthdate;
+            // $regData['gender'] = $this->input->post("registerGender");
+            // $regData['contact'] = $this->input->post("registerContact");
+            // $regData['password'] = $this->input->post("registerConfirmPassword");
+            // $regData['verification_code'] = $emailCode;
+            $regData[0] = $this->input->post("registerEmail");
+            $regData[1] = $this->input->post("registerName");
+            $regData[2] = $this->input->post("registerLastName");
+            $regData[3] = $birthdate;
+            $regData[4] = $this->input->post("registerGender");
+            $regData[5] = $this->input->post("registerContact");
+            $regData[6] = $this->input->post("registerConfirmPassword");
+            $regData[7] = $emailCode;
+
 
             $this->Surveyor->insertSurveyor(...$regData);
             $this->sendEmail($emailCode, $regData['email']);
@@ -86,6 +99,45 @@ class Pages extends CI_Controller
         }
     }
 
+    public function showReports()
+    {
+        $surveys = $this->Survey->getSurveyAll();
+
+        $data['css'] = "reports.css";
+        $data['title'] = "TUP Openstat - Reports";
+        $data += $this->setSessionData();
+        $data["surveys"] = $surveys;
+
+        $this->load->view('templates/header', $data);
+        $this->load->view('pages/reports', $data);
+    }
+
+    public function showCharts()
+    {
+        $survey_id = (int)$this->uri->segment(3, 0);
+        $survey = $this->Survey->getSurvey($survey_id);
+        $data['survey'] = $survey;
+
+        $data["questions"] = $this->Question->getQuestions($survey_id);
+        $data["choices"][] = "";
+        $index = 0;
+        foreach ($data["questions"] as $question) {
+            $choices = $this->Choice->getChoices($question["question_id"]);
+            foreach ($choices as $choice) {
+                $choice["choice_frequency"] = $this->Choice->getChoiceFrequency($choice["choice_id"]);
+                $data["choices"][$index] = $choice;
+                $index++;
+            }
+        }
+
+        $data['css'] = "charts.css";
+        $data['title'] = "TUP Openstat - Charts";
+        $data += $this->setSessionData();
+
+        $this->load->view('templates/header', $data);
+        $this->load->view('pages/charts', $data);
+    }
+
     public function login()
     {
         $username = $this->input->post("loginEmail");
@@ -113,6 +165,155 @@ class Pages extends CI_Controller
             $this->session->set_flashdata('error', 'Invalid username and password');
             redirect(base_url());
         }
+    }
+
+    public function createForm()
+    {
+        $data['css'] = "createForm.css";
+        $data['title'] = "Create form";
+        $data += $this->setSessionData();
+
+        $this->form_validation->set_rules("formTitle", "Survey title", "required");
+        $this->form_validation->set_rules("formDescription", "Survey description", "required");
+        $this->form_validation->set_rules("formStartDate", "Start date", "required");
+        $this->form_validation->set_rules("formDueDate", "Due date", "required");
+
+        if ($this->form_validation->run()) {
+            $accessCode = md5((string)date('Y-m-d H:i:s'));
+            $accessCode = substr($accessCode, 0, 7);
+            $surveyData = array(
+                'surveyor_id' => $this->session->userdata("surveyor_id"),
+                'survey_title' => $this->input->post("formTitle"),
+                'survey_description' => $this->input->post("formDescription"),
+                'start_date' => $this->input->post("formStartDate"),
+                'end_date' => $this->input->post("formDueDate"),
+                'status' => 1,
+                'access_code' => $accessCode
+            );
+
+            $this->Survey->insertSurvey(...$surveyData);
+            $survey_id = $this->db->insert_id();
+
+            $questions = $this->input->post("question");
+            $questionOrder = 0;
+            foreach ($questions as $question) {
+                $questionData = array(
+                    "survey_id" => $survey_id,
+                    "question_type" => $question["questionType"],
+                    "question_text" => $question["questionText"],
+                    "question_order" => ++$questionOrder
+                );
+                $this->Question->insertQuestion(...$questionData);
+                $question_id = $this->db->insert_id();
+                $choiceOrder = 0;
+                if (isset($question["questionChoice"])) {
+                    foreach ($question["questionChoice"] as $choice) {
+                        $choiceData = array(
+                            "question_id" => $question_id,
+                            "choice_text" => $choice,
+                            "choice_order" => ++$choiceOrder
+                        );
+
+                        $this->Choice->insertChoice(...$choiceData);
+                    }
+                }
+            }
+        }
+
+        $this->load->view('templates/header', $data);
+        $this->load->view('pages/createForm', $data);
+    }
+
+    public function answerForm()
+    {
+
+        $data['css'] = "answerForm.css";
+        $data['title'] = "Answer form";
+        $data += $this->setSessionData();
+
+        $survey_id = (int)$this->uri->segment(2, 0);
+
+        $survey = $this->Survey->getSurvey($survey_id);
+
+        if ($this->input->post("verificationInput") == $survey->access_code) {
+            $this->session->set_userdata("currentCode", $survey->access_code);
+        }
+
+        $surveyData = array(
+            'surveyor_id' => $this->session->userdata("surveyor_id"),
+            'survey_title' => $survey->survey_title,
+            'survey_description' => $survey->survey_description,
+            'start_date' => $survey->start_date,
+            'end_date' => $survey->end_date,
+            'status' => 1,
+            'access_code' => $survey->access_code
+        );
+
+        $data["survey"] = $surveyData;
+        $data["questions"] = $this->Question->getQuestions($survey_id);
+        $data["choices"][] = "";
+
+        $index = 0;
+        foreach ($data["questions"] as $question) {
+            $choices = $this->Choice->getChoices($question["question_id"]);
+            foreach ($choices as $choice) {
+                $data["choices"][$index] = $choice;
+                $index++;
+            }
+        }
+
+        $this->form_validation->set_rules($data["questions"][0]["question_id"], 'Question', 'required');
+        if ($this->form_validation->run()) {
+            foreach ($data["questions"] as $question) {
+                if ($question["question_type"] == 3) {
+                    $responseData = array(
+                        "survey_id" => $survey_id,
+                        "question_id" => $question["question_id"],
+                        "answer" => $this->input->post($question["question_id"])
+                    );
+
+                    $this->Response->insertResponse(...$responseData);
+                } else if ($question["question_type"] == 2) {
+                    $choices = $this->Choice->getChoices($question["question_id"]);
+                    foreach ($choices as $choice) {
+
+                        if ($choice["question_id"] == $question["question_id"]) {
+                            if ($this->input->post($question["question_id"] . $choice["choice_id"]) != NULL) {
+                                $responseData = array(
+                                    "survey_id" => $survey_id,
+                                    "question_id" => $question["question_id"],
+                                    "answer" => $this->input->post($question["question_id"] . $choice["choice_id"])
+                                );
+
+                                $this->Response->insertResponse(...$responseData);
+                            }
+                        }
+                    }
+                } else {
+                    $responseData = array(
+                        "survey_id" => $survey_id,
+                        "question_id" => $question["question_id"],
+                        "answer" => $this->input->post($question["question_id"])
+                    );
+
+                    $this->Response->insertResponse(...$responseData);
+                }
+            }
+        }
+
+        $this->load->view('templates/header', $data);
+        $this->load->view('pages/answerForm', $data);
+    }
+
+    public function deleteForm()
+    {
+        $survey_id = (int)$this->uri->segment(2, 0);
+
+        $this->Response->deleteResponse($survey_id);
+        $this->Question->deleteQuestion($survey_id);
+        $this->Survey->deleteSurvey($survey_id);
+
+        redirect(base_url("myaccount/created_forms"));
     }
 
     public function setSessionData()
@@ -181,7 +382,6 @@ class Pages extends CI_Controller
             $this->session->set_userdata("birthday", $birthday);
         }
 
-        // echo $email . " " . $name . " " . $lastName . " " . $month . " " . $day . " " . $year;
         redirect($this->agent->referrer());
     }
 
@@ -223,6 +423,8 @@ class Pages extends CI_Controller
         $data['css'] = "myaccount/createdforms.css";
         $data['title'] = "Created forms";
         $data += $this->setSessionData();
+        $data["surveys"] = $this->Survey->getSurveys($data["id"]);
+
         $this->load->view('templates/header', $data);
         $this->load->view('pages/myaccount/createdforms', $data);
     }

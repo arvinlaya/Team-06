@@ -13,7 +13,7 @@
                  <li style="list-style-image: url('<?= base_url("assets/images/myaccount/pen.png") ?>')"><a href="<?= base_url("/myaccount/edit_profile") ?>">Edit Profile</a></li>
                  <li style="list-style-image: url('<?= base_url("assets/images/myaccount/lock.png") ?>')"><a href="<?= base_url("/myaccount/change_password") ?>">Change Password</a></li>
                  <li style="list-style-image: url('<?= base_url("assets/images/myaccount/form.png") ?>')"><a href="<?= base_url("/myaccount/created_forms") ?>">Created Form</a></li>
-                 <li style="list-style-image: url('<?= base_url("assets/images/myaccount/logout.png") ?>')"><a href="<?= base_url("/myaccount/logout") ?>">Logout</a></li>
+                 <li style="list-style-image: url('<?= base_url("assets/images/myaccount/logout.png") ?>')"><a href="<?= base_url("/logout") ?>">Logout</a></li>
              </ul>
          </div>
      </div>

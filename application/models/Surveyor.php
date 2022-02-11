@@ -53,7 +53,7 @@ class Surveyor extends CI_Model
 
             $this->db->insert("surveyor", $data);
         } else {
-            echo "NOT AN EMAIL";
+            // echo "NOT AN EMAIL";
         }
     }
 

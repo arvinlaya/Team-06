@@ -20,20 +20,23 @@
 <body>
     <nav id="navContainer">
         <ul id="navlinks">
-            <li><a href="#" id="logo">TUPOpenStat</a></li>
+            <li><a href="<?= base_url() ?>" id="logo">TUPOpenStat</a></li>
             <li><a href="#">FORM<span style="font-size: 1.3rem;">&#9660;</span></a>
                 <ul>
-                    <li><a href="#">Create form</a></li>
-                    <li><a href="#">Answer form</a></li>
+                    <li><a href="<?= base_url("create_form") ?>">Create form</a></li>
+                    <li><a href="<?= base_url("reports") ?>">Answer form</a></li>
                 </ul>
             </li>
-            <li><a href="#">DATA REPORTS</a></li>
+            <li><a href="<?= base_url("reports") ?>">DATA REPORTS</a></li>
         </ul>
         <?php
         if (isset($login) == false) {
             echo '<a href="#" id="sign-in">Sign in</a>';
         } else {
+            echo "<div id='profileLinks'>";
             echo '<h2 id="signed-in">', $first_name, ' ', $last_name, '</h2>';
+            echo '<a href="' . base_url("myaccount") . '"><img src="' . base_url("assets/images/profile.png") . '"></a>';
+            echo "</div>";
         }
         ?>
 

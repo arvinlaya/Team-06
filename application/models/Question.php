@@ -14,11 +14,16 @@ class Question extends CI_Model
         return $query->row();
     }
 
-    public function insertQuestion($survey_id, $form_id, $question_type, $question_text, $question_order)
+    public function getQuestions($survey_id)
+    {
+        $query = $this->db->query("SELECT * FROM question WHERE survey_id=" . $survey_id);
+        return $query->result_array();
+    }
+
+    public function insertQuestion($survey_id, $question_type, $question_text, $question_order)
     {
         $data = array(
             'survey_id' => $survey_id,
-            'form_id' => $form_id,
             'question_type' => $question_type,
             'question_text' => $question_text,
             'question_order' => $question_order
@@ -36,8 +41,8 @@ class Question extends CI_Model
         $this->db->update('question');
     }
 
-    public function deleteQuestion($id)
+    public function deleteQuestion($survey_id)
     {
-        $this->db->delete('question', array('question_id' => $id));
+        $query = $this->db->query("DELETE FROM question WHERE survey_id=" . $survey_id);
     }
 }

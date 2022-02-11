@@ -14,11 +14,24 @@ class Choice extends CI_Model
         return $query->row();
     }
 
-    public function insertChoice($question_id, $choice_text)
+    public function getChoices($question_id)
+    {
+        $query = $this->db->query("SELECT * FROM choice WHERE question_id=" . $question_id);
+        return $query->result_array();
+    }
+
+    public function getChoiceFrequency($choice_id)
+    {
+        $query = $this->db->query("SELECT * FROM response WHERE answer=" . $choice_id);
+        return $query->num_rows();
+    }
+
+    public function insertChoice($question_id, $choice_text, $choice_order)
     {
         $data = array(
             'question_id' => $question_id,
-            'choice_text' => $choice_text
+            'choice_text' => $choice_text,
+            'choice_order' => $choice_order
         );
         $this->db->insert('choice', $data);
     }
@@ -34,5 +47,4 @@ class Choice extends CI_Model
     {
         $this->db->delete('choice', array('choice_id' => $choice_id));
     }
-
 }
