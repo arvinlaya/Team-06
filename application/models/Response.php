@@ -14,12 +14,17 @@ class Response extends CI_Model
         return $query->row();
     }
 
-    public function insertResponse($survey_id, $question_id, $response_id, $answer)
+    public function getResponses($question_id)
+    {
+        $query = $this->db->query("SELECT answer FROM response WHERE question_id=" . $question_id);
+        return $query->result();
+    }
+
+    public function insertResponse($survey_id, $question_id, $answer)
     {
         $data = array(
             'survey_id' => $survey_id,
             'question_id' => $question_id,
-            'response_id' => $response_id,
             'answer' => $answer
         );
         $this->db->insert('response', $data);
@@ -32,8 +37,8 @@ class Response extends CI_Model
         $this->db->update('response');
     }
 
-    public function deleteResponse($response_id)
+    public function deleteResponse($survey_id)
     {
-        $this->db->delete('response', array('response_id' => $response_id));
+        $query = $this->db->query("DELETE FROM response WHERE survey_id=" . $survey_id);
     }
 }

@@ -14,12 +14,24 @@ class Survey extends CI_Model
         return $query->row();
     }
 
-    public function insertSurvey($surveyor_id, $survey_name, $description, $start_date, $end_date, $status, $access_code)
+    public function getSurveys($surveyor_id)
+    {
+        $query = $this->db->query("SELECT * FROM survey WHERE surveyor_id =" . $surveyor_id);
+        return $query->result();
+    }
+
+    public function getSurveyAll()
+    {
+        $query = $this->db->query("SELECT * FROM survey");
+        return $query->result();
+    }
+
+    public function insertSurvey($surveyor_id, $survey_title, $survey_description, $start_date, $end_date, $status, $access_code)
     {
         $data = array(
             'surveyor_id' => $surveyor_id,
-            'survey_name' => $survey_name,
-            'description' => $description,
+            'survey_title' => $survey_title,
+            'survey_description' => $survey_description,
             'start_date' => $start_date,
             'end_date' => $end_date,
             'status' => $status,
@@ -39,5 +51,4 @@ class Survey extends CI_Model
     {
         $this->db->delete('survey', array('survey_id' => $survey_id));
     }
-
 }

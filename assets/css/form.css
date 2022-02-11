@@ -1,0 +1,28 @@
+#detailsContainerWrapper {
+	display: flex;
+	align-items: center;
+}
+
+#detailsContainer {
+	margin: 1rem;
+	padding: 1rem;
+	width: 50%;
+	margin: auto;
+	background-color: pink;
+	position: relative;
+	border-radius: 1rem;
+}
+
+#dateContainer {
+	position: absolute;
+	top: 0;
+	right: 0;
+	padding: 1rem;
+}
+
+#linksContainer h4 {
+	float: right;
+	padding: 0;
+	margin: 0;
+	margin-left: 1rem;
+}

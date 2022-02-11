@@ -4,7 +4,7 @@ h2 {
 	text-align: center;
 }
 
-#createdFormsContainer {
+#reportsContainer {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -14,10 +14,10 @@ h2 {
 .createdFormContainer {
 	background-color: #f9f9f9;
 	padding: 15px;
+	margin: 5px 0 5px 0;
 	border-radius: 10px;
 	font-family: "Roboto";
-	margin-bottom: 10px;
-	width: 100%;
+	width: 80%;
 	font-size: 2rem;
 	position: relative;
 }
@@ -29,13 +29,6 @@ h2 {
 	right: 10px;
 	bottom: 0px;
 	cursor: pointer;
-	/* z-index: 1; */
-}
-
-.linkWrapper {
-	width: 80%;
-	text-decoration: none;
-	color: black;
 }
 
 .linkWrapper:hover {
@@ -54,10 +47,14 @@ h2 {
 	font-size: 1.3rem;
 }
 
-a {
-	color: black;
+.linksContainer {
+	position: absolute;
+	bottom: 0;
+	right: 10px;
 }
 
-a:hover {
-	text-decoration: none;
+.linksContainer a {
+	color: black;
+	font-size: 1rem;
+	margin: 0 0 0 15px;
 }

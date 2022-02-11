@@ -1,0 +1,52 @@
+body {
+	background-color: #dadada;
+}
+
+#createContainerWrapper {
+	width: 100%;
+}
+
+#createContainer {
+	background-color: purple;
+	width: 80%;
+	margin: 15px auto;
+	position: relative;
+}
+
+#createHeader,
+.questionContainer {
+	padding: 15px;
+}
+
+.questionContainer {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	position: relative;
+	background-color: pink;
+}
+
+.choiceContainer {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+}
+
+.deleteQuestion {
+	background-color: transparent;
+	border: none;
+	position: absolute;
+	right: 0;
+	bottom: 10px;
+	cursor: pointer;
+}
+
+#addQuestion {
+	float: right;
+}
+
+#save {
+	position: absolute;
+	right: 0;
+	bottom: -150px;
+}

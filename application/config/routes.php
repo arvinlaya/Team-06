@@ -53,10 +53,17 @@ $route['default_controller'] = 'Pages/home';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 
+$route['logout'] = 'Pages/logout';
 $route['register'] = 'Pages/register';
 $route['register/verify'] = 'Pages/verifyRegister';
 $route['login'] = 'Pages/login';
 $route['verify'] = 'Pages/verify';
+$route['reports'] = 'Pages/showReports';
+$route['reports/charts/:num'] = 'Pages/showCharts';
+
+$route['create_form'] = 'Pages/createForm';
+$route['answer_form/:num'] = 'Pages/answerForm';
+$route['delete_form/:num'] = 'Pages/deleteForm';
 
 $route['myaccount'] = "Pages/myaccount";
 

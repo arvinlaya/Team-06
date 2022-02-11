@@ -1,0 +1,25 @@
+#chartsContainerWrapper {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+}
+#chartsContainer {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	text-align: center;
+	width: 100%;
+}
+.chartContainer {
+	width: 30%;
+	height: 300px;
+	margin: 20px;
+	overflow-y: scroll;
+	overflow-x: hidden;
+}
+
+#chartTitle {
+	font-family: "Roboto";
+	text-align: center;
+	padding: 10px;
+}
