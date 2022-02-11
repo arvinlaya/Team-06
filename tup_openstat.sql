@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 05, 2022 at 04:50 AM
+-- Generation Time: Feb 11, 2022 at 11:13 PM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 8.0.12
 
@@ -30,7 +30,8 @@ SET time_zone = "+00:00";
 CREATE TABLE `choice` (
   `choice_id` int(11) NOT NULL,
   `question_id` int(11) DEFAULT NULL,
-  `choice_text` varchar(255) DEFAULT NULL
+  `choice_text` varchar(255) DEFAULT NULL,
+  `choice_order` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -50,26 +51,12 @@ CREATE TABLE `dataset` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `form`
---
-
-CREATE TABLE `form` (
-  `form_id` int(11) NOT NULL,
-  `survey_id` int(11) DEFAULT NULL,
-  `form_order` int(11) DEFAULT NULL,
-  `name` varchar(255) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `question`
 --
 
 CREATE TABLE `question` (
   `question_id` int(11) NOT NULL,
   `survey_id` int(11) DEFAULT NULL,
-  `form_id` int(11) DEFAULT NULL,
   `question_type` varchar(255) DEFAULT NULL,
   `question_text` varchar(255) DEFAULT NULL,
   `question_order` int(11) DEFAULT NULL
@@ -116,8 +103,8 @@ CREATE TABLE `response` (
 CREATE TABLE `survey` (
   `survey_id` int(11) NOT NULL,
   `surveyor_id` int(11) DEFAULT NULL,
-  `survey_name` varchar(255) DEFAULT NULL,
-  `description` text DEFAULT NULL,
+  `survey_title` varchar(255) DEFAULT NULL,
+  `survey_description` text DEFAULT NULL,
   `start_date` date DEFAULT NULL,
   `end_date` date DEFAULT NULL,
   `status` tinyint(1) DEFAULT NULL,
@@ -170,19 +157,11 @@ ALTER TABLE `dataset`
   ADD KEY `survey_id` (`survey_id`);
 
 --
--- Indexes for table `form`
---
-ALTER TABLE `form`
-  ADD PRIMARY KEY (`form_id`),
-  ADD KEY `survey_id` (`survey_id`);
-
---
 -- Indexes for table `question`
 --
 ALTER TABLE `question`
   ADD PRIMARY KEY (`question_id`),
-  ADD KEY `survey_id` (`survey_id`),
-  ADD KEY `form_id` (`form_id`);
+  ADD KEY `survey_id` (`survey_id`);
 
 --
 -- Indexes for table `respondent`
@@ -220,7 +199,7 @@ ALTER TABLE `surveyor`
 -- AUTO_INCREMENT for table `choice`
 --
 ALTER TABLE `choice`
-  MODIFY `choice_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `choice_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=111;
 
 --
 -- AUTO_INCREMENT for table `dataset`
@@ -229,16 +208,10 @@ ALTER TABLE `dataset`
   MODIFY `dataset_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `form`
---
-ALTER TABLE `form`
-  MODIFY `form_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
---
 -- AUTO_INCREMENT for table `question`
 --
 ALTER TABLE `question`
-  MODIFY `question_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `question_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=73;
 
 --
 -- AUTO_INCREMENT for table `respondent`
@@ -250,13 +223,13 @@ ALTER TABLE `respondent`
 -- AUTO_INCREMENT for table `response`
 --
 ALTER TABLE `response`
-  MODIFY `response_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `response_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=151;
 
 --
 -- AUTO_INCREMENT for table `survey`
 --
 ALTER TABLE `survey`
-  MODIFY `survey_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `survey_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 
 --
 -- AUTO_INCREMENT for table `surveyor`
@@ -281,17 +254,10 @@ ALTER TABLE `dataset`
   ADD CONSTRAINT `dataset_ibfk_1` FOREIGN KEY (`survey_id`) REFERENCES `survey` (`survey_id`);
 
 --
--- Constraints for table `form`
---
-ALTER TABLE `form`
-  ADD CONSTRAINT `form_ibfk_1` FOREIGN KEY (`survey_id`) REFERENCES `survey` (`survey_id`) ON DELETE CASCADE;
-
---
 -- Constraints for table `question`
 --
 ALTER TABLE `question`
-  ADD CONSTRAINT `question_ibfk_1` FOREIGN KEY (`survey_id`) REFERENCES `survey` (`survey_id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `question_ibfk_2` FOREIGN KEY (`form_id`) REFERENCES `form` (`form_id`) ON DELETE CASCADE;
+  ADD CONSTRAINT `question_ibfk_1` FOREIGN KEY (`survey_id`) REFERENCES `survey` (`survey_id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `response`
