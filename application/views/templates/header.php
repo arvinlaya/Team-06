@@ -23,7 +23,11 @@
             <li><a href="<?= base_url() ?>" id="logo">TUPOpenStat</a></li>
             <li><a href="#">FORM<span style="font-size: 1.3rem;">&#9660;</span></a>
                 <ul>
-                    <li><a href="<?= base_url("create_form") ?>">Create form</a></li>
+                    <?php
+                    if (isset($login)) {
+                        echo '<li><a href="' .  base_url("create_form")  . '">Create form</a></li>';
+                    }
+                    ?>
                     <li><a href="<?= base_url("reports") ?>">Answer form</a></li>
                 </ul>
             </li>
